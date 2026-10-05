@@ -27,12 +27,26 @@ Always use the Swift CLI toolchain for building, running, and managing the proje
 | **Update Dependencies** | `swift package update` | Updates packages to the latest compatible versions |
 
 ### Creating a Standalone macOS `.app` Bundle (CLI Only)
-To launch with full macOS app permissions (Dock icon, menu bar, drag-and-drop, sandbox/file access) without Xcode GUI:
+### Creating a Standalone macOS `.app` Bundle (Universal Binary: Apple Silicon + Intel)
+To create a fully native **Universal 2** `.app` bundle that runs with zero emulation on both Apple Silicon (M1/M2/M3/M4) and Intel Macs:
 
 ```bash
+# 1. Compile both architectures
+swift build -c release --triple arm64-apple-macosx
+swift build -c release --triple x86_64-apple-macosx
+
+# 2. Package bundle structure
 mkdir -p build/Unlink.app/Contents/{MacOS,Resources}
-cp $(swift build -c release --show-bin-path)/Unlink build/Unlink.app/Contents/MacOS/
 cp Resources/Info.plist build/Unlink.app/Contents/
+cp Resources/AppIcon.icns build/Unlink.app/Contents/Resources/
+
+# 3. Create Universal Binary using lipo
+lipo -create -output build/Unlink.app/Contents/MacOS/Unlink \
+  .build/arm64-apple-macosx/release/Unlink \
+  .build/x86_64-apple-macosx/release/Unlink
+
+# 4. Optional: Create distributable zip
+(cd build && zip -q -r -y Unlink.zip Unlink.app)
 ```
 
 ---
