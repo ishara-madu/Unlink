@@ -1,0 +1,51 @@
+# ==============================================================================
+# Unlink - Swift Package Manager & macOS .gitignore
+# ==============================================================================
+
+# Swift Package Manager Build Artifacts
+.build/
+Packages/
+Package.pins
+
+# Custom CLI Builds & Distribution App Bundles
+build/
+*.app
+*.zip
+*.dmg
+
+# macOS System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Xcode & Project Artifacts (Strict CLI Only)
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+DerivedData/
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xccheckout
+*.moved-aside
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# IDEs & Text Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Logs and Crash Reports
+*.log
+*.tmp
+*.bak
